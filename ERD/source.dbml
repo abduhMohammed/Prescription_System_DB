@@ -1,0 +1,67 @@
+Table Patient {
+    UR_Number INT [primary key]
+    PName VARCHAR(50)
+    PAddress TEXT
+    Age INT
+    Phone VARCHAR(20)
+    Email VARCHAR(50)
+    Medicare_Card_Number VARCHAR(20) [unique]
+}
+
+Table Doctor {
+    Doc_ID INT [primary key]
+    DName VARCHAR(50)
+    Phone VARCHAR(30)
+    Email VARCHAR(50)
+    Specialty VARCHAR(30)
+    Years_Of_Experience INT
+}
+
+Table Patient_Doctor {
+    UR_Number INT
+    Doc_ID INT
+}
+
+Table Prescription {
+    Prescription_ID INT [primary key]
+    Date DATE [default: `GETDATE()`]
+    Quantity INT
+    UR_Number INT
+}
+
+Table Doctor_Prescription {
+    Doc_ID INT
+    Prescription_ID INT
+}
+
+Table Drugs {
+    Drug_ID INT [primary key]
+    Trade_Name VARCHAR(50)
+    Strength VARCHAR(50)
+}
+
+Table Prescription_Drugs {
+    Drug_ID INT
+    Prescription_ID INT
+}
+
+Table Pharmaceutical_Company {
+    Company_Name VARCHAR(100) [primary key]
+    Address VARCHAR(150)
+    Phone VARCHAR(50)
+}
+
+Table Drug_Company {
+    Drug_ID INT
+    Company_Name VARCHAR(100)
+}
+
+Ref: Patient_Doctor.UR_Number > Patient.UR_Number
+Ref: Patient_Doctor.Doc_ID > Doctor.Doc_ID
+Ref: Prescription.UR_Number > Patient.UR_Number
+Ref: Doctor_Prescription.Doc_ID > Doctor.Doc_ID
+Ref: Doctor_Prescription.Prescription_ID > Prescription.Prescription_ID
+Ref: Prescription_Drugs.Drug_ID > Drugs.Drug_ID
+Ref: Prescription_Drugs.Prescription_ID > Prescription.Prescription_ID
+Ref: Drug_Company.Drug_ID > Drugs.Drug_ID
+Ref: Drug_Company.Company_Name > Pharmaceutical_Company.Company_Name
